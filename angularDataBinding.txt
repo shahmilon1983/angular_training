@@ -1,0 +1,125 @@
+
+Step-1: Stock.component.ts
+import { Component, OnInit } from '@angular/core';
+import { IStockDetails } from './stocks.model';
+@Component({
+  selector: 'app-stocks',
+  templateUrl: './stocks.component.html',
+  styleUrls: ['./stocks.component.css']
+})
+export class StocksComponent implements OnInit {
+  public stockInfo:string;  /// typecasting a variable with expected value type
+  public stockNumber:number;
+  public stockImage:string;
+  public isStockEditable:boolean;
+  public stockDetails: IStockDetails;
+  constructor() { 
+   this.stockInfo = '';
+   this.stockNumber = 0;
+   this.stockImage = '';
+   this.stockDetails = {} as IStockDetails
+   this.isStockEditable= false;
+  }
+  public ngOnInit(): void {
+    this.initializeStockDetails();
+  }
+  public initializeStockDetails():void{
+  this.stockInfo = "Today IRCTC SHARE GOT SPLIT";
+  this.stockNumber = 123123123;
+  this.stockImage = "https://cdn.zeebiz.com/sites/default/files/styles/zeebiz_850x478/public/2019/12/07/106702-irctc.jpg?itok=UQ7Vbh6P";
+  this.stockDetails= {
+        code:'asdasdsadTEST',
+        symbol:'TRT',
+        rate:1230,
+        description:'Lorem ipsum',
+        date:'29/10/2021',
+        rate_float:'XRP',
+        imageUrl : 'https://www.tradebrains.in/wp-content/uploads/2018/01/sharda-energy-share-price.png'
+    }
+  }
+  public editStock():void{
+    this.isStockEditable= true;
+  }
+  public updateStock():void{
+    this.isStockEditable= false;
+  }
+}
+Step-2: Stock.component.html
+<section class="container">
+    <h1>Stock Details</h1>
+    <p>{{stockInfo}}</p>
+    <p>{{stockNumber}}</p>
+    <img src="{{stockImage}}" alt="test"><br/>
+    <img [src]="stockImage" alt="test">
+    <ul>
+        <li>{{stockDetails.code}}</li>
+        <input *ngIf="isStockEditable" type="text" >
+        <li>{{stockDetails.symbol}}</li>
+        <input *ngIf="isStockEditable" type="text" >
+        <li>{{stockDetails.rate}}</li>
+        <input *ngIf="isStockEditable" type="text" >
+        <li>{{stockDetails.description}}</li>
+        <input *ngIf="isStockEditable" type="text" >
+        <li>{{stockDetails.date}}</li>
+        <input *ngIf="isStockEditable" type="text" >
+        <li>{{stockDetails.rate_float}}</li>
+        <input *ngIf="isStockEditable" type="text" >
+        <li>{{stockDetails.imageUrl}}</li>
+        <input *ngIf="isStockEditable" type="text" >
+    </ul> 
+    <button class="btn btn-sucess" (click)="editStock()">Edit Stock</button>
+    <button class="btn btn-danger" (click)="updateStock()">Update Stock</button>
+    </section><section class="container">
+    <h1>Stock Details</h1>
+    <p>{{stockInfo}}</p>
+    <p>{{stockNumber}}</p>
+    <img src="{{stockImage}}" alt="test"><br/>
+    <img [src]="stockImage" alt="test">
+    <ul>
+        <li>{{stockDetails.code}}</li>
+        <li>{{stockDetails.symbol}}</li>
+        <li>{{stockDetails.rate}}</li>
+        <li>{{stockDetails.description}}</li>
+        <li>{{stockDetails.date}}</li>
+        <li>{{stockDetails.rate_float}}</li>
+        <li>{{stockDetails.imageUrl}}</li>
+    </ul> 
+    <button class="btn btn-sucess" (click)="editStock()">Edit Stock</button>
+    <button class="btn btn-danger" (click)="updateStock()">Update Stock</button>
+    </section>
+Step-3: Stock.model.ts
+export interface IStockDetails{
+    code:string;
+    symbol:string;
+    rate:number;
+    description:string;
+    date:string;
+    rate_float:string;
+    imageUrl:string;
+}
+Step-4: In app.module.ts
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
+import { Home1Component } from './components/home1/home1.component';
+import { Home2Component } from './components/home2/home2.component';
+import { Home3Component } from './components/home3/home3.component';
+import { Home4Component } from './components/home4/home4.component';
+import { StocksComponent } from './stocks/stocks.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    StocksComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
